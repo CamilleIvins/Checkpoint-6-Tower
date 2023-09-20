@@ -7,8 +7,12 @@ export class EventsController extends BaseController {
     constructor() {
         super('api/events')
         this.router
+            .get('', this.getEvents)
+            .get('/:eventId', this.getEventById)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
+            .put('/:eventId', this.editEvent)
+            .delete('/:eventId', this.cancelEvent)
     }
 
     //req: 
@@ -19,7 +23,7 @@ export class EventsController extends BaseController {
             // what are we framing: the info of the event
             const eventBody = req.body
             //whodunnit?
-            eventBody.creatorId = req.userInfo._id
+            eventBody.creatorId = req.userInfo.id
             //data alteration = need service
             const event = await eventsService.createEvent(eventBody)
             // do NOT forget the res portion - what you get back
@@ -27,5 +31,47 @@ export class EventsController extends BaseController {
         } catch (error) {
             next(error)
         }
+    }
+
+    async getEvents(req, res, next) {
+        try {
+            const events = await eventsService.getEvents(req.query)
+            res.send(events)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getEventById(req, res, next) {
+        try {
+            const event = await eventsService.getEventById(req.params.eventId)
+            res.send(event)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async editEvent(req, res, next) {
+        try {
+            const updates = req.body
+            const eventId = req.params.eventId
+            // const eventLead = req.userInfo.id
+            const editedEvent = await eventsService.editEvent(eventId, updates)
+            res.send(editedEvent)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async cancelEvent(req, res, next) {
+        try {
+            const eventId = req.params.eventId
+            const userId = req.userInfo.id
+            const event = await eventsService.cancelEvent(eventId, userId)
+            res.send(event)
+        } catch (error) {
+            next(error)
+        }
+
     }
 }
