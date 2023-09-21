@@ -1,6 +1,7 @@
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
-import{api} from './AxiosService.js'
+import{api} from './AxiosService.js';
+// IMPORT MODEL SO THAT IT CAN USE IT WHEN CREATING...AND INSTANCE
 import { Event } from '../models/Event.js';
 
 class EventsService {

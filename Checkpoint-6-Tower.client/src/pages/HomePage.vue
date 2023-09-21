@@ -31,7 +31,7 @@
   
   <section class="row">
     <div v-for="event in events" :key="event.id" class="col-6 col-md-3">
-      {{ event.name }}
+      <!-- {{ event.name }} -->
       <EventCard :event="event" />
     </div>
   </section>
