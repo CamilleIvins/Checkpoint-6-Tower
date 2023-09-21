@@ -4,6 +4,7 @@ export class Event {
 
     constructor(data){
         this.id = data.id
+        this.name = data.name
         this.creatorId = data.creatorId
         this.location = data.location
         this.coverImg = data.coverImg
