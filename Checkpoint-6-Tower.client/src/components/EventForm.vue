@@ -41,12 +41,12 @@
         </div>
         <div class="mb-1 col-4">
             <label for="event-location" class="text-light">Location</label>
-            <input v-model="eventData.location" type="number" id="event-location" class="form-control" maxlength="100" placeholder="Location">
+            <input v-model="eventData.location" type="text" id="event-location" class="form-control" maxlength="100" placeholder="Location">
 
         </div>
         <div class="mb-1 col-12">
             <label for="event-description" class="text-light">Event Description</label>
-            <textarea v-model="eventData.description" type="number" id="event-description" class="form-control" maxlength="100" cols="30" rows="10" placeholder="Event Description"></textarea>
+            <textarea v-model="eventData.description" type="number" id="event-description" class="form-control" maxlength="1000" cols="30" rows="10" placeholder="Event Description"></textarea>
 
         </div>
         <div class="col-12 text-end">
@@ -66,14 +66,17 @@ import { computed, reactive, onMounted, ref } from 'vue';
 import {eventsService} from '../services/EventsService.js'
 import Pop from '../utils/Pop.js';
 import { logger } from '../utils/Logger.js';
+import { Modal } from 'bootstrap';
 export default {
     setup(){
-
-const eventData = ref({})
-const router = useRouter()
-function resetForm(){
-    eventData.value = {category:''}
+        const eventData = ref({})
+        const router = useRouter()
+        function resetForm(){
+        eventData.value = {category:''}
 }
+        onMounted(()=>{
+            resetForm()
+        })
 
     return { 
         eventData,
@@ -84,6 +87,8 @@ function resetForm(){
                  let newEvent = await eventsService.createEvent(eventData.value)
             Pop.toast('Event created', 'Well done!')
             resetForm()
+            // Modal.getOrCreateInstance('#create-event').hide()
+            // router.push({name: 'Event Details', params:{eventId: newEvent.id}})
 
             } catch (error) {
                 Pop.error(error.message)

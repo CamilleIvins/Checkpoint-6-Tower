@@ -1,6 +1,8 @@
 import { AppState } from '../AppState.js';
 import { logger } from '../utils/Logger.js';
 import{api} from './AxiosService.js'
+import { Event } from '../models/Event.js';
+
 class EventsService {
 async createEvent(eventData){
     logger.log('create method can be called', eventData)
@@ -8,6 +10,16 @@ async createEvent(eventData){
     const newEvent = new Event(res.data)
     AppState.TowerEvent.unshift(newEvent)
 }
+
+async getEvents(){
+    const res = await api.get('api/events')
+    logger.log('got events', res.data)
+
+    AppState.towerEvents = res.data.map(towerEvent => new Event(towerEvent))
+    logger.log('do events show?')
+}
+
+
 }
 
 export const eventsService = new EventsService

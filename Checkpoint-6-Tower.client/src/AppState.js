@@ -7,5 +7,5 @@ export const AppState = reactive({
   account: {},
 
 /**@type {Event[]} */
-  TowerEvent: []
+  towerEvents: []
 })

@@ -1,7 +1,7 @@
 <template>
-  <section class="container-fluid">
+  <section class="container">
 
-    <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
+    <!-- <div class="home flex-grow-1 d-flex flex-column align-items-center justify-content-center">
       <div class="home-card p-5 bg-white rounded elevation-3">
       <img src="https://bcw.blob.core.windows.net/public/img/8600856373152463" alt="CodeWorks Logo"
       class="rounded-circle">
@@ -9,7 +9,7 @@
         Vue 3 Starter
       </h1>
     </div>
-  </div>
+  </div> -->
 <EventForm />
   <section class="row">
     Yo, new row!
@@ -28,20 +28,49 @@
         <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'digital'">Digital</button>
         <!-- <button class="btn col-2 btn-outline-light" @click="filterBy = 'misc'">Misc</button> -->
   </nav>
-</section>
-
-<section class="row">
-  <div class="col-6 col-md-3">
-    
-  </div>
+  
+  <section class="row">
+    <div v-for="event in events" :key="event.id" class="col-6 col-md-3">
+      {{ event.name }}
+      <EventCard :event="event" />
+    </div>
+  </section>
 </section>
 </template>
 
 <script>
+import { computed, onMounted } from 'vue';
+// import { EventCard } from '../components/EventCard.vue';
+import { eventsService } from '../services/EventsService.js';
+import Pop from '../utils/Pop.js';
+import {AppState} from '../AppState.js'
+import EventCard from '../components/EventCard.vue';
+import { logger } from '../utils/Logger.js';
+
+
+
 export default {
-  setup() {
-    return {}
+    setup() {
+      onMounted(()=> {
+        getEvents();
+      })
+
+async function getEvents(){
+  // REMEMBER THE TRY-CATCH
+  try {
+    await eventsService.getEvents()
+    logger.log('did events come back?')
+  } catch (error) {
+    Pop.error(error)
   }
+}
+
+        return {
+events: computed(()=> AppState.towerEvents)
+
+        };
+    },
+    components: { EventCard }
 }
 </script>
 
