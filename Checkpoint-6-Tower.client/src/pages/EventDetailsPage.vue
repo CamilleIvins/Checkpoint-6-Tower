@@ -1,13 +1,15 @@
 <template>
-    <div class="container">
-        <div class="text-light">
-            Welcome!
-            <p class="m-0">
+    <div v-if="event" class="container">
+        <!-- <div class="text-light">
+            <h1 class="m-0">
                 Here are some details on {{ event.name }}
-            </p>
-        </div>
+            </h1>
+        </div> -->
         <!-- event card (w/ attend confirm) -->
-        <section v-if="event" class="row">
+
+        <!-- TODO make sure to put the cancel and attend buttons somehwere on the details! Make sure to hook up those functions down below -->
+        <!-- TODO make sure we conditionally render if the event is canceled .... v-if="event.isCanceled"..... show some other text here that says "Hey this is canceled" -->
+        <section class="row">
             <div class="col-12 frosted-card">
 
                 <!-- event photo -->
@@ -16,34 +18,40 @@
                 </div>
                 <!-- event details, 3 rows: title, time / description/ spots left & attend button -->
                 <div class="col-7">
-</div>
-    <!-- 2 div: name, p: place/ date/time -->
-    <div class="row justify-content-between">
-<div>
-    <!-- h3? title -->
-    <!-- location -->
-    <p>
-
-    </p>
-</div>
-<div>
-
-</div>
-    </div>
-
-</div>
-        </section>
-
+                    
+                    <!-- 2 div: name, p: place/ date/time -->
+                    <div class="row justify-content-between">
+                        <div>
+                            <!-- h3? title -->
+                            <h3>
+                                {{ event.name }}
+                            </h3>
+                            <!-- location -->
+                            <p>
+                                {{event.location }}
+                            </p>
+                        </div>
+                        <div>
+                            {{ new Date( event.startDate).toLocaleDateString() }}
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            </section>
+            
 
         <!-- attendees section -->
         <section class="row">
-
+            Total Attendees: {{ event.ticketCount }}
+            <!-- TODO bring in ticket holder images and :alt ticket holder name -->
         </section>
 
         <!-- comments section -->
     <!-- look at hackathons -->
         <section class="row">
-
+            <!-- TODO comments form - single input, submmit button -->
+            <!-- TODO bring in a comments component OR just put them here in a card - make sure the user image and name is present on the card a long with the commment body-->
 
         </section>
     </div>
@@ -66,6 +74,7 @@ export default {
         watchEffect(()=> {
             getEventById()
             getCommentsInEvent()
+            // TODO call our getTicketsByEventId function
         })
         async function getEventById(){
             try {
@@ -86,14 +95,31 @@ export default {
                 await eventsService.getCommentsInEvent(eventId)
                 
             } catch (error) {
-                Pop.error("Wherefore dost thou err, oh wordless quip?",error)
+                Pop.error("Wherefore dost thou err, o wordless quip?",error)
                 
             }
         }
+
+        // TODO finish this function yay!
+        async function deleteComment(){}
+
+        // TODO finish this function yay! .... maybe this exists on the form instead...
+        async function createComment(){}
+
+        // TODO finish this function yay!
+        async function getTicketsByEventId(){}
+
+        // TODO finish this function yay!
+        async function cancelEvent(){}
+
+        // TODO finish this function yay!
+        async function purchaseTicket(){}
        
     return { 
-event : computed(()=> AppState.activeEvent),
-user: computed(()=> AppState.user)
+        // compute in our comments from the appState
+        // compute in our tickets from the appState
+        event : computed(()=> AppState.activeEvent),
+        user: computed(()=> AppState.user)
 
      }
     }

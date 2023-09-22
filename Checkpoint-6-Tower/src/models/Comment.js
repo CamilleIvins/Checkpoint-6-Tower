@@ -19,7 +19,7 @@ CommentSchema.virtual('creator', {
 
 CommentSchema.virtual('event', {
     localField: 'eventId',
-    foreignField: 'event',  //same as lecture, but if not working, try '_id'
+    foreignField: '_id',  //same as lecture, but if not working, try '_id'
     ref: 'Event',
     justOne: true
 })

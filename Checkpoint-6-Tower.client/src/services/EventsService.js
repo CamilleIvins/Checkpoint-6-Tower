@@ -24,7 +24,9 @@ async getEvents(){
 async getEventById(eventId){
     const res= await api.get(`api/events/${eventId}`)
     logger.log(`Here is your selected event`, res.data)
-    AppState.ActiveEvent = new Event(res.data)
+    // appstate location doesn't match what we put in the appstate
+    // AppState.ActiveEvent = new Event(res.data)
+    AppState.activeEvent = new Event(res.data)
 }
 
 async getCommentsInEvent(eventId){

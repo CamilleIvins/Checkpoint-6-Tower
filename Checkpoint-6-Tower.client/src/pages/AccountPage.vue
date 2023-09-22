@@ -4,6 +4,10 @@
     <img class="rounded" :src="account.picture" alt="" />
     <p>{{ account.email }}</p>
   </div>
+
+  <div>
+    <!-- TODO place our tickets here ... so maybe tickets should go in a component?? OR call this through the events -->
+  </div>
 </template>
 
 <script>
@@ -13,6 +17,7 @@ export default {
   setup() {
     return {
       account: computed(() => AppState.account)
+      // TODO computed to get MY TICKETS look at the server for 'account/tickets'
     }
   }
 }
