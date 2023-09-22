@@ -22,10 +22,16 @@ class EventsService {
         return event
     }
 
-    async editEvent(eventId, updates) {
+    async editEvent(eventId, updates, eventLead) {
         const originalEvent = await dbContext.Events.findById(eventId)
         // const userId = await dbContext.Account
         // const eventOwner = await this.createEvent(eventId.creatorId)
+
+
+        if (originalEvent.creatorId != eventLead) {
+            throw new Forbidden(`You cannot change that which you did not create`)
+        }
+
         if (!originalEvent) {
             throw new BadRequest(`This event with id ${eventId} has not been located`)
         }
