@@ -10,7 +10,7 @@
       </h1>
     </div>
   </div> -->
-<EventForm />
+<EventForm v-if="account"/>
   <section class="row">
     Yo, new row!
     <div class="rounded my-2">
@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 // import { EventCard } from '../components/EventCard.vue';
 import { eventsService } from '../services/EventsService.js';
 import Pop from '../utils/Pop.js';
@@ -53,8 +53,8 @@ export default {
     setup() {
       onMounted(()=> {
         getEvents();
-      })
-
+      });
+const filterBy = ref('')
 async function getEvents(){
   // REMEMBER THE TRY-CATCH
   try {
@@ -66,11 +66,19 @@ async function getEvents(){
 }
 
         return {
-events: computed(()=> AppState.towerEvents)
+          filterBy,
+events: computed(()=> {
+  if(!filterBy.value)
+    return AppState.towerEvents
+  else {
+    return AppState.towerEvents.filter(tower => tower.type == filterBy.value)
+}
+   }),
+   account: computed(() => AppState.account.id),
 
-        };
-    },
-    components: { EventCard }
+    };
+},
+  components: {EventCard }
 }
 </script>
 

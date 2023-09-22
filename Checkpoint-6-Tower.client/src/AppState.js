@@ -7,5 +7,11 @@ export const AppState = reactive({
   account: {},
 
 /**@type {Event[]} */
-  towerEvents: []
+  towerEvents: [],
+
+/**@type {Event} */
+  activeEvent: null,
+
+  /**@type {Comment[]} */
+  activeEventComments: [],
 })

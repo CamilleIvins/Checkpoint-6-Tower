@@ -1,23 +1,27 @@
 <template>
-    <div class="component">
-<div class="event-teaser">
-    <img :src="event.coverImg" alt="">
-    <div class="frosted-card">
-            <p>{{ event.name }}</p>
+    <router-link :to="{name: 'Event Details', params: {eventId: event.id}}">
+    <!-- <router-link :to="{path: `events/${event.id}`}"> -->
+
+ <div class="component my-2">
+    <div class="event-teaser position-relative">
+        <img :src="event.coverImg" alt="">
+        <div class="frosted-card text-light p-1">
+            <p class="">{{ event.name }}</p>
             <p>{{ event.location }}</p>
             <p>{{ event.startDate }}</p>
-            <p class="text-end pe-2">{{ event.capacity }}</p>
+            <p class="text-end pe-2">Capacity: {{ event.capacity }}</p>
             <p v-if="event.isCanceled == true" class="bg-danger">Event Cancelled</p>
+        </div>
     </div>
+    
 </div>
-
-    </div>
+</router-link>
 </template>
 
 
 <script>
-import { AppState } from '../AppState';
-import { computed, reactive, onMounted } from 'vue';
+// import { AppState } from '../AppState';
+// import { computed, reactive, onMounted } from 'vue';
 import { Event } from '../models/Event.js';
 
 export default {
@@ -41,12 +45,20 @@ border-radius: 15px;
     }
 }
 
+.event-teaser:hover{
+    border-radius: 15px;
+    box-shadow: 0 0 10px 2px rgb(218, 218, 218);
+    transform: scale(1.03);
+    transition: 0.35s ease;
+}
 .frosted-card{
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(5px);
     background-color: rgba(145, 147, 150, 0.455);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     bottom: 0;
+    position: absolute;
+    width: 100%;
 }
 p {
     margin: 0;

@@ -1,8 +1,8 @@
 <template>
     <div class="container-fluid">
-<button @click.prevent="createEvent">
+<!-- <button @click.prevent="createEvent">
     Press to test
-</button>
+</button> -->
 
 <form @submit.prevent="createEvent" class="row">
 
@@ -85,13 +85,14 @@ export default {
             try {
                 logger.log("create button pushed")
                  let newEvent = await eventsService.createEvent(eventData.value)
-            Pop.toast('Event created', 'Well done!')
+            Pop.toast('Event created', 'success')
             resetForm()
+            // ID is found in NAVBAR
             // Modal.getOrCreateInstance('#create-event').hide()
-            // router.push({name: 'Event Details', params:{eventId: newEvent.id}})
+            router.push({name: 'Event Details', params:{eventId: newEvent.id}}) //<--did not like params, still created
 
             } catch (error) {
-                Pop.error(error.message)
+                Pop.error(error)
             }
            
         }
@@ -107,3 +108,6 @@ export default {
   object-fit: contain;
 }
 </style>
+
+<!-- https://images.unsplash.com/photo-1655910836658-f4977367cfc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1927&q=80
+ Join us at the Caramel Colosseum for a captivating weekend of caramel-cored combat!-->
