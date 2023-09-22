@@ -56,4 +56,4 @@ class EventsService {
         return event
     }
 }
-export const eventsService = new EventsService
+export const eventsService = new EventsService()
