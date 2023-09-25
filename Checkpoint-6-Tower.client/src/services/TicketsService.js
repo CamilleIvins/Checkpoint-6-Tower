@@ -11,6 +11,11 @@ class TicketsService {
         logger.log('new ticket purchase', res.data)
         AppState.activeEventTickets.push(new Ticket(res.data))
     }
+    async getTicketsByAccount(){
+        const res = await api.get(`api/tickets`)
+        logger.log('ticket array', res.data)
+        AppState.activeEventTickets = res.data.map(ticket =>new Ticket(ticket))
+    }
 
     async returnTicket(ticketId){
         const res = await api.delete(`api/tickets/${ticketId}`)

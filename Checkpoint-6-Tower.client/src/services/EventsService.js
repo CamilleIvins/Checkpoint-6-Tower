@@ -32,12 +32,28 @@ async getEventById(eventId){
 }
 
 async cancelEvent(eventId){
-    const res = await this.getEventById(eventId)
-    logger.log("event cancelled", res.data)
-    res.isCanceled = true
-    logger.log("event cancelled", res.data)
-    
+    // const res = await this.getEventById(eventId)
+    // const res = await api.put(`api/events/${eventId}`)
+    const res = await api.delete(`api/events/${eventId}`)
+    logger.log("event to cancel", res.data.isCanceled)
+// AppState.activeEvent = res
+    // res.data.isCanceled = true
+    // res.data.isCancelled = true
+    // res.data.isCanceled = !res.data.isCanceled
+    // res.data.isCancelled = !res.data.isCancelled
+    // if(res.data.isCancelled && res.data.isCanceled == false){
+    //    res.data.isCanceled = true
+    //    res.data.isCancelled = true
+    // } else {AppState.activeEvent.isCancelled = true}{
+    //     res.data.isCanceled = false
+    //    res.data.isCancelled = false
+    // }
+    // logger.log("event cancelled", res.data.isCanceled)
+    // const towerIndex = AppState.towerEvents.findIndex(event => event.id == eventId)
+    // const updatedEvent = new Event(res.data)
+    // AppState.activeEvent = new Event(updatedEvent)
 
+    // return updatedEvent
 }
 
 async createComment(eventComment){

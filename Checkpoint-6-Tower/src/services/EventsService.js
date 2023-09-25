@@ -60,6 +60,7 @@ class EventsService {
         }
 
         event.isCanceled = !event.isCanceled
+        event.isCancelled = !event.isCancelled
         await event.save()
         return event
     }

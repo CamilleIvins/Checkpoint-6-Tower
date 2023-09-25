@@ -34,29 +34,42 @@
                             </p>
                         </div>
                         <div>
+                            <p v-if="event.isCancelled == true" class="bg-danger text-light" >CANCELLED</p>
+                            <p v-if="event.capacity - tickets.length == 0" class="bg-success text-dark" >SOLD OUT</p>
                             {{ new Date( event.startDate).toLocaleDateString() }}
                         </div>
-                        <div v-if="event.capacity - tickets.length > 0" class="row justify-content-center">
+                        <div v-if="event.capacity - tickets.length && event.isCancelled == false > 0" class="row justify-content-center">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
                            <button v-if="!ticketholder && user.isAuthenticated" :disabled="ticketholderToggle" class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button>
                            <button v-else-if="user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">RETURN TICKETS</button>
-                           <!-- <button v-else-if="event.capacity - tickets.length === 0" class="btn btn-outline-danger col-6">FULL</button> -->
+                           <!-- <button v-else-if="event.isCancelled==true" disabled class="btn btn-danger col-6">EVENT CANCELLED</button> -->
                            <button v-else disabled class="btn btn-outline-light col-6">Log in to buy or return tickets</button>
                         </div>
-                        <div v-if="event.capacity - tickets.length == 0" class="row justify-content-center">
+                        <div v-if="event.capacity - tickets.length == 0 && event.isCancelled == false" class="row justify-content-center">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
                            <button v-if="ticketholder && user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">RETURN TICKETS</button>
                            <button v-else-if="!ticketholder" disabled class="btn btn-danger col-6">FULL</button>
                            <button v-else disabled class="btn btn-danger col-6">Full event</button>
                         </div>
+                        <div v-if="event.isCancelled == true" class="row justify-content-center">
+                           <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
+                           <button v-if="ticketholder && user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">TICKET REFUND</button>
+                           <button v-else-if="!ticketholder" disabled class="btn btn-danger col-6">Event Cancelled</button>
+                        </div>
                     </div>
 </div>                    
                 </div>
             </div>
-            <div class="row justify-content-end">
-                <button @click="cancelEvent" class="cancel-card btn text-light d-flex my-2 col-2">
+            <div v-if="event.creatorId = account.id" class="row justify-content-end">
+                <button v-if="!event.isCancelled" @click="cancelEvent" class="cancel-card btn text-light d-flex my-2 col-2">
                     Cancel Event
                 </button>
+                <button v-else-if="event.isCancelled" disabled class="cancel-card btn text-dark d-flex my-2 col-2">
+                   Event Cancelled
+                </button>
+                <!-- <button v-else-if="event.isCancelled" @click="cancelEvent" class="uncancel-card btn text-dark d-flex my-2 col-2">
+                   Restore Event
+                </button> -->
             </div>
             </section>
             
@@ -133,13 +146,14 @@ const ticketholderToggle = ref(false)
             getEventById()
             getCommentsInEvent()
             getTicketsByEventId()
+            
             // TODO call our getTicketsByEventId function ✅
         })
         async function getEventById(){
             try {
-                // const eventId = route.params.eventId
-                await eventsService.getEventById(route.params.eventId)
-                
+                const eventId = route.params.eventId
+                await eventsService.getEventById(eventId)
+                logger.log(eventId)
             } catch (error) {
                 logger.log(error)
                 Pop.error(error)
@@ -201,6 +215,7 @@ const ticketholderToggle = ref(false)
              const eventId = route.params.eventId
 
              await eventsService.cancelEvent(eventId)
+           
           } catch (error) {
             Pop.error(error)
           }
@@ -279,6 +294,16 @@ const ticketholderToggle = ref(false)
 .cancel-card:hover{
   backdrop-filter: blur(15px);
   box-shadow: 0 0 10px 2px rgb(248, 0, 0);
+    transform: scale(1.01);
+    transition: 0.35s ease;
+}
+.uncancel-card{
+  backdrop-filter: blur(10px);
+    background-color: rgba(45, 248, 0.808);
+}
+.uncancel-card:hover{
+  backdrop-filter: blur(15px);
+  box-shadow: 0 0 10px 2px rgb(45, 248, 0.808);
     transform: scale(1.01);
     transition: 0.35s ease;
 }

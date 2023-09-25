@@ -8,6 +8,7 @@ export const EventSchema = new Schema({
     description: { type: String, required: true, maxLength: 5000 },
     startDate: { type: Date, required: true, maxLength: 50 },
     capacity: { type: Number, required: true, maxLength: 25 },
+    isCancelled: { type: Boolean, required: true, default: false },
     isCanceled: { type: Boolean, required: true, default: false },
     // if you set as a virtual, cannot have a literal here
     // ticketCount: { type: Number, required: true, maxLength: 5 },
