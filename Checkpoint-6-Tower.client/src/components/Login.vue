@@ -6,9 +6,10 @@
     </button>
     <div v-else>
       <div class="dropdown my-2 my-lg-0">
-        <div type="button" class="bg-dark border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
+        <div type="button" class="frosted-card border-0 selectable no-select" data-bs-toggle="dropdown" aria-expanded="false">
           <div v-if="account.picture || user.picture">
             <img :src="account.picture || user.picture" alt="account photo" height="40" class="rounded" />
+            {{ account.name }}
           </div>
         </div>
         <div class="dropdown-menu dropdown-menu-lg-end dropdown-menu-start p-0" aria-labelledby="authDropdown">
@@ -49,4 +50,9 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.frosted-card{
+  backdrop-filter: blur(3px);
+    background-color: rgba(145, 147, 150, 0.455);
+    overflow-wrap: break-word;
+}</style>
