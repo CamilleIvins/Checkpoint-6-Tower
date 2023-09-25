@@ -3,6 +3,8 @@ import { logger } from '../utils/Logger.js';
 import{api} from './AxiosService.js';
 // IMPORT MODEL SO THAT IT CAN USE IT WHEN CREATING...AND INSTANCE
 import { Event } from '../models/Event.js';
+import { Comment } from '../models/Comment.js';
+import { Ticket } from '../models/Ticket.js';
 
 class EventsService {
 async createEvent(eventData){
@@ -29,11 +31,69 @@ async getEventById(eventId){
     AppState.activeEvent = new Event(res.data)
 }
 
+async cancelEvent(eventId){
+    const res = await this.getEventById(eventId)
+    logger.log("event cancelled", res.data)
+    res.isCanceled = true
+    logger.log("event cancelled", res.data)
+    
+
+}
+
+async createComment(eventComment){
+    // const res = await api.post(`api/events/${eventId}/comments`, eventComment)
+    // AppState.activeEvent = eventId
+    const res = await api.post(`api/comments`, eventComment)
+    logger.log('added comment', res.data)
+    AppState.activeEventComments.push(new Comment(res.data))
+}
+// ANSWER IS IN HERE, DO NOT CHANGE TO EVENT ENDPOINTS
+// async createPicture(){
+//     try {
+//       logger.log(pictureData.value, AppState.activeAlbum.id, route.params.albumId)
+//       pictureData.value.albumId = route.params.albumId // assigns the album's id to the pictureData
+//       // NOTE we need to send ONE object with all the data included on it. not separate pieces of info
+//       await picturesService.createPicture(pictureData.value)
+//       Pop.toast('Added picture', 'success', 'center-end')
+//       pictureData.value = {}
+//       Modal.getOrCreateInstance('#create-picture').hide()
+//     } catch (error) {
+//       Pop.error(error)
+//     }
+//   }
+//  }
+// }
+
+
 async getCommentsInEvent(eventId){
     logger.log(eventId)
     const res = await api.get(`api/events/${eventId}/comments`)
     logger.log('comments should load', res.data)
     AppState.activeEventComments = res.data.map(comm => new Comment(comm))
+}
+
+
+async deleteComment(deletedCommentId){
+    logger.log(deletedCommentId)
+    await api.delete(`api/comments/${deletedCommentId}`)
+
+    // const deletedCommentIndex = AppState.activeEventComments.findIndex(comment => comment.id == deletedCommentId)
+    // AppState.activeEventComments.splice(deletedCommentIndex,1)
+    AppState.activeEventComments = AppState.activeEventComments.filter(c => c.id !=deletedCommentId)
+}
+
+
+// async deleteComment(commentId){
+//     const activeComment= await AppState.activeEventComments.findIndex(comment => comment.id == commentId)
+//     const deletedCommentIndex =  activeComment
+//     logger.log(commentId)
+//     await api.delete(`api/comments/${activeComment}`)
+//     AppState.activeEventComments.splice(deletedCommentIndex,1)
+// }
+async getTicketsByEventId(eventId){
+    const res = await api.get(`api/events/${eventId}/tickets`)
+    logger.log('ticket data', res.data)
+    AppState.activeEventTickets = res.data.map(ticket => new Ticket(ticket))
 }
 
 }

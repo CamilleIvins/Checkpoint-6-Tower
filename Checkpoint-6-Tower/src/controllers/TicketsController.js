@@ -7,17 +7,17 @@ export class TicketsController extends BaseController {
         super('api/tickets')
         this.router
             .use(Auth0Provider.getAuthorizedUserInfo)
-            .post('', this.createTicket)
+            .post('', this.purchaseTicket)
             .delete('/:ticketId', this.returnTicket)
 
     }
 
-    async createTicket(req, res, next) {
+    async purchaseTicket(req, res, next) {
         try {
             const ticketBody = req.body
             ticketBody.accountId = req.userInfo.id
 
-            const ticket = await ticketsService.createTicket(ticketBody)
+            const ticket = await ticketsService.purchaseTicket(ticketBody)
 
             res.send(ticket)
 

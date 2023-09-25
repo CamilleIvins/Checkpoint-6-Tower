@@ -2,7 +2,7 @@
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-3">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <div class="d-flex flex-column align-items-center">
-        <img alt="logo" src="../assets/img/cw-logo.png" height="45" />
+        <img alt="logo" src="../assets/img/TowerLogo.png" height="45" />
       </div>
     </router-link>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText"
@@ -10,13 +10,22 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
-      <!-- <ul class="navbar-nav me-auto">
-        <li>
+      <ul class="navbar-nav me-auto">
+        <ModalWrapper id="create-event" v-if="user.isAuthenticated">
+          <template #button>
+            <i class="mdi mdi-plus-box"></i> Create Event
+          </template>
+
+          <template #body>
+            <EventForm/>
+          </template>
+        </ModalWrapper>
+      <!--   <li>
           <router-link :to="{ name: 'About' }" class="btn text-success lighten-30 selectable text-uppercase">
             About
           </router-link>
-        </li>
-      </ul> -->
+        </li>-->
+      </ul> 
       <!-- LOGIN COMPONENT HERE -->
       <Login />
     </div>
@@ -25,11 +34,17 @@
 
 <script>
 import Login from './Login.vue';
+import { computed } from 'vue';
+import { AppState } from '../AppState.js';
+import ModalWrapper from './ModalWrapper.vue';
 export default {
   setup() {
-    return {}
+    return {
+      user: computed(()=> AppState.user)
+
+    }
   },
-  components: { Login }
+  components: { Login, ModalWrapper }
 }
 </script>
 

@@ -14,12 +14,12 @@ export class EventsController extends BaseController {
             .get('/:eventId', this.getEventById)
             // comments
             .get('/:eventId/comments', this.getCommentsInEvent)
+            .get('/:eventId/tickets', this.getTicketsByEventId)
             .use(Auth0Provider.getAuthorizedUserInfo)
             .post('', this.createEvent)
             .put('/:eventId', this.editEvent)
             .delete('/:eventId', this.cancelEvent)
-            // tickets
-            .get('/:eventId/tickets', this.getTicketsForEvent)
+        // tickets
     }
 
     //req: 
@@ -83,10 +83,10 @@ export class EventsController extends BaseController {
     }
 
     // to tickets SERVICE
-    async getTicketsForEvent(req, res, next) {
+    async getTicketsByEventId(req, res, next) {
         try {
             // passes postman w/ CORRECT endpoint
-            const ticketHolders = await ticketsService.getTicketsForEvent(req.params.eventId)
+            const ticketHolders = await ticketsService.getTicketsByEventId(req.params.eventId)
             res.send(ticketHolders)
         } catch (error) {
             next(error)

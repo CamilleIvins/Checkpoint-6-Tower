@@ -2,7 +2,22 @@
     <router-link :to="{name: 'Event Details', params: {eventId: event.id}}">
     <!-- <router-link :to="{path: `events/${event.id}`}"> -->
 <!-- code did not like this ⬆️ -->
- <div class="component my-2">
+ <div v-if="event.isCanceled == false" class="component my-2">
+    <div class="event-teaser position-relative">
+        <img :src="event.coverImg" alt="">
+        <div class="frosted-card text-light p-1">
+            <p class="">{{ event.name }}</p>
+            <p>{{ event.location }}</p>
+            <!-- <p>{{ event.startDate }}</p> -->
+            <p>{{ new Date(event.startDate).toLocaleDateString() }}</p>
+            <p class="text-end pe-2">Capacity: {{ event.capacity }}</p>
+            <p v-if="event.isCanceled == true" class="bg-danger">Event Cancelled</p>
+        </div>
+    </div>
+    
+</div>
+
+ <div v-if="event.isCanceled == false" class="component my-2">
     <div class="event-teaser position-relative">
         <img :src="event.coverImg" alt="">
         <div class="frosted-card text-light p-1">

@@ -5,7 +5,7 @@ dbContext
 
 class TicketsService {
 
-    async getTicketsForEvent(eventId) {
+    async getTicketsByEventId(eventId) {
         const ticketHolders = await dbContext.Tickets.find({ eventId }).populate('profile event')
         return ticketHolders
     }
@@ -14,7 +14,7 @@ class TicketsService {
         const tickets = await dbContext.Tickets.find({ accountId: userId }).populate('profile event')
         return tickets
     }
-    async createTicket(ticketBody) {
+    async purchaseTicket(ticketBody) {
         const ticket = await dbContext.Tickets.create(ticketBody)
         //    populate virtuals
         await ticket.populate('profile event')

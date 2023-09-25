@@ -1,5 +1,7 @@
 import { dbContext } from "../db/DbContext.js"
 import { BadRequest, Forbidden } from "../utils/Errors.js"
+import { logger } from "../utils/Logger.js";
+
 
 class EventsService {
 
@@ -61,5 +63,24 @@ class EventsService {
         await event.save()
         return event
     }
+
+    async getCommentsInEvent(eventId) {
+        await eventsService.getEventById(eventId)
+
+        const comments = await dbContext.Comments.find({ eventId: eventId }).populate('creator event')
+
+        return comments
+    }
+
+    // async deleteComment(commentId, userId) {
+    //     const nixComment = await dbContext.Comments.findById(commentId).populate('creator event')
+    //     logger.log('comment to be deleted', nixComment)
+    //     if (nixComment.creatorId != userId) {
+    //         throw new Forbidden("Not your words to revoke")
+    //     }
+    //     await nixComment.remove()
+    // }
+
+
 }
 export const eventsService = new EventsService()

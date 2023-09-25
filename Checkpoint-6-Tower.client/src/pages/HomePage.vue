@@ -10,9 +10,10 @@
       </h1>
     </div>
   </div> -->
-<EventForm v-if="account"/>
+  <!-- Trying out a MODAL -->
+<!-- <EventForm v-if="account"/> -->
   <section class="row">
-    Yo, new row!
+    <!-- Yo, new row! -->
     <div class="rounded my-2">
 
       <img src="https://images.unsplash.com/photo-1582091652153-eb8f55ff7cd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80" class="rounded cover-img elevation-2">

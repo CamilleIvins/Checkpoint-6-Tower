@@ -88,7 +88,7 @@ export default {
             Pop.toast('Event created', 'success')
             resetForm()
             // ID is found in NAVBAR
-            // Modal.getOrCreateInstance('#create-event').hide()
+            Modal.getOrCreateInstance('#create-event').hide()
             router.push({name: 'Event Details', params:{eventId: newEvent.id}}) //<--did not like params, still created
 
             } catch (error) {
