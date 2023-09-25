@@ -22,7 +22,7 @@
                 <div class="col-7">
                     
                     <!-- 2 div: name, p: place/ date/time -->
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between text-light px-2">
                         <div>
                             <!-- h3? title -->
                             <h3>
@@ -30,13 +30,22 @@
                             </h3>
                             <!-- location -->
                             <p>
-                                {{event.location }}
+                              {{ event.type }} | {{event.location }}
                             </p>
                         </div>
                         <div>
                             <p v-if="event.isCancelled == true" class="bg-danger text-light" >CANCELLED</p>
                             <p v-if="event.capacity - tickets.length == 0" class="bg-success text-dark" >SOLD OUT</p>
-                            {{ new Date( event.startDate).toLocaleDateString() }}
+                           Occuring On: {{ new Date( event.startDate).toLocaleDateString() }} | Total Capacity {{ event.capacity }}
+                        </div>
+                        <div class="my-3">
+                          
+                        {{ event.description}}
+                           
+                            <p class="text-end">
+                               Created On: {{ new Date( event.createdAt).toLocaleDateString() }}
+
+                            </p>
                         </div>
                         <div v-if="event.capacity - tickets.length && event.isCancelled == false > 0" class="row justify-content-center">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
