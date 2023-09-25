@@ -117,6 +117,7 @@ events: computed(()=> {
 .frosted-card{
   backdrop-filter: blur(3px);
     background-color: rgba(145, 147, 150, 0.455);
+    overflow-wrap: break-word;
 }
 .frosted-card:hover{
   backdrop-filter: blur(3px);
