@@ -11,7 +11,8 @@ class TicketsService {
     }
     async getTicketsByAccount(userId) {
         // this is not identical to Mick's lecture, but it passed POSTMAN tests
-        const tickets = await dbContext.Tickets.find({ accountId: userId }).populate('profile event')
+        // const tickets = await dbContext.Tickets.find({ accountId: userId }).populate('profile event')
+        const tickets = await dbContext.Tickets.find({ accountId: userId }).populate({ path: 'event', populate: { path: 'creator ticketCount', select: '-email' } })
         return tickets
     }
     async purchaseTicket(ticketBody) {
