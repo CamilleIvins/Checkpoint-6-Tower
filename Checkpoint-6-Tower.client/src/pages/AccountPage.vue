@@ -51,7 +51,7 @@ import { computed, onMounted,} from 'vue';
 import { AppState } from '../AppState';
 import EventCard from '../components/EventCard.vue';
 import { eventsService } from '../services/EventsService.js';
-import { ticketsService } from '../services/TicketsService.js';
+import { accountService } from '../services/AccountService.js';
 import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { useRoute } from 'vue-router';
@@ -63,24 +63,37 @@ export default {
     const route = useRoute()
 
     onMounted(()=> {
-        getEvents();
+        // getEvents();
         getTicketsByAccount()
+        // purchaseTicket()
       });
 
-async function getEvents(){
-  // REMEMBER THE TRY-CATCH
-  try {
-    await eventsService.getEvents()
-    logger.log('did events come back?')
-  } catch (error) {
-    Pop.error(error)
-  }
-}
+      // draws EVERYTHING because you own all the events
+// async function getEvents(){
+//   // REMEMBER THE TRY-CATCH
+//   try {
+//     await eventsService.getEvents()
+//     logger.log('did events come back?')
+//   } catch (error) {
+//     Pop.error(error)
+//   }
+// }
+
+// async function purchaseTicket(){
+//             try {
+//                 // ticketholderToggle.value = true
+//                 let ticketData = {eventId: route.params.eventId}
+//                 await ticketsService.purchaseTicket(ticketData)
+//                 // ticketholderToggle.value = false
+//             } catch (error) {
+//                 Pop.error(error)
+//             }
+//         }
 
 async function getTicketsByAccount(){
             try {
-              const accountId = AppState.account.id
-                await ticketsService.getTicketsByAccount(accountId)
+              const accountId = route.params.accountId
+                await accountService.getTicketsByAccount(accountId)
             } catch (error) {
                 Pop.error(error)
             }
@@ -88,7 +101,7 @@ async function getTicketsByAccount(){
     return {
       account: computed(() => AppState.account),
       events: computed(() => AppState.towerEvents.filter(tower => tower.creatorId == AppState.account.id)),
-      tickets: computed(()=> AppState.activeEventTickets),
+      tickets: computed(()=> AppState.myTickets),
       // these all show up as your events
       // OwnEvents: computed(() => AppState.towerEvents.filter(e => e.creatorId == AppState.account.id)),
       // toAttend: computed(() => AppState.myTickets)

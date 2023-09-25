@@ -1,6 +1,7 @@
 import { AppState } from "../AppState.js"
 import { Ticket } from "../models/Ticket.js"
 import { logger } from "../utils/Logger.js"
+import Pop from "../utils/Pop.js"
 import { api } from "./AxiosService.js"
 
 
@@ -11,11 +12,15 @@ class TicketsService {
         logger.log('new ticket purchase', res.data)
         AppState.activeEventTickets.push(new Ticket(res.data))
     }
-    async getTicketsByAccount(){
-        const res = await api.get(`api/tickets`)
-        logger.log('ticket array', res.data)
-        AppState.activeEventTickets = res.data.map(ticket =>new Ticket(ticket))
-    }
+    // async getTicketsByAccount(){
+    //    try {
+    //      const res = await api.get(`api/account/tickets`)
+    //      logger.log('ticket array', res.data)
+    //      AppState.activeEventTickets = res.data.map(ticket =>new Ticket(ticket))
+    //    } catch (error) {
+    //     Pop.error(error)
+    //    }
+    // }
 
     async returnTicket(ticketId){
         const res = await api.delete(`api/tickets/${ticketId}`)

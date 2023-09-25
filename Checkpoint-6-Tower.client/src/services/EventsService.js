@@ -26,6 +26,7 @@ async getEvents(){
 async getEventById(eventId){
     const res= await api.get(`api/events/${eventId}`)
     logger.log(`Here is your selected event`, res.data)
+    logger.log(res.data.creator)
     // appstate location doesn't match what we put in the appstate
     // AppState.ActiveEvent = new Event(res.data)
     AppState.activeEvent = new Event(res.data)

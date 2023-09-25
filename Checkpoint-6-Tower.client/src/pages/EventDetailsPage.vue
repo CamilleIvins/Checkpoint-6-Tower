@@ -43,7 +43,7 @@
                         {{ event.description}}
                            
                             <p class="text-end">
-                               Created On: {{ new Date( event.createdAt).toLocaleDateString() }}
+                               Created On: {{ new Date( event.createdAt).toLocaleDateString() }} 
 
                             </p>
                         </div>
@@ -299,6 +299,8 @@ const ticketholderToggle = ref(false)
 .cancel-card{
   backdrop-filter: blur(10px);
     background-color: rgba(255, 21, 21, 0.808);
+    overflow-wrap: break-word;
+
 }
 .cancel-card:hover{
   backdrop-filter: blur(15px);
@@ -309,6 +311,8 @@ const ticketholderToggle = ref(false)
 .uncancel-card{
   backdrop-filter: blur(10px);
     background-color: rgba(45, 248, 0.808);
+    overflow-wrap: break-word;
+
 }
 .uncancel-card:hover{
   backdrop-filter: blur(15px);

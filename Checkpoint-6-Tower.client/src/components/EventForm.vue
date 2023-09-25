@@ -7,12 +7,12 @@
 <form @submit.prevent="createEvent" class="row">
 
     <div class="mb-1 col-6">
-          <label class="text-light" for="event-name">Event Title</label>
+          <label class="text-dark" for="event-name">Event Title</label>
           <input v-model="eventData.name" id="event-name" class="form-control" type="text" minlength="5" maxlength="55" placeholder="Event Title" required>
         </div>
 
         <div class="mb-1 col-6">
-            <label class="text-light" for="event-type">Event Category</label>
+            <label class="text-dark" for="event-type">Event Category</label>
             <select v-model="eventData.type" id="event-type" class="form-control" placeholder="Event Category">
             <option disabled selected value="">Please select a category</option>
 
@@ -23,34 +23,34 @@
             </select>
         </div>
         <div class="mb-1 col-12">
-            <label class="text-light" for="event-cover">Cover Image</label>
+            <label class="text-dark" for="event-cover">Cover Image</label>
             <input v-model="eventData.coverImg" type="url" id="event-cover" class="form-control" minlength="5" maxlength="250" placeholder="Event Cover URL">
         </div>
         <div class="mb-1 col-12">
             <img :src="eventData.coverImg" alt="" class="img-fluid preview-img">
         </div>
         <div class="mb-1 col-2">
-            <label for="event-startDate" class="text-light">Event Date</label>
+            <label for="event-startDate" class="text-dark">Event Date</label>
             <input v-model="eventData.startDate" type="date" id="event-startDate" class="form-control" placeholder="Event Date">
 
         </div>
         <div class="mb-1 col-2">
-            <label for="event-capacity" class="text-light">Capacity</label>
+            <label for="event-capacity" class="text-dark">Capacity</label>
             <input v-model="eventData.capacity" type="number" id="event-capacity" class="form-control" maxlength="5" placeholder="Attendee Limit">
 
         </div>
         <div class="mb-1 col-4">
-            <label for="event-location" class="text-light">Location</label>
+            <label for="event-location" class="text-dark">Location</label>
             <input v-model="eventData.location" type="text" id="event-location" class="form-control" maxlength="100" placeholder="Location">
 
         </div>
         <div class="mb-1 col-12">
-            <label for="event-description" class="text-light">Event Description</label>
+            <label for="event-description" class="text-dark">Event Description</label>
             <textarea v-model="eventData.description" type="number" id="event-description" class="form-control" maxlength="1000" cols="30" rows="10" placeholder="Event Description"></textarea>
 
         </div>
         <div class="col-12 text-end">
-            <button class="btn text-light">SUBMIT</button>
+            <button class="btn text-dark">SUBMIT</button>
         </div>
 
 </form>
