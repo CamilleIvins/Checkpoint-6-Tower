@@ -22,7 +22,7 @@
                 <div class="col-7">
                     
                     <!-- 2 div: name, p: place/ date/time -->
-                    <div class="row justify-content-between text-light px-2">
+                    <div class="row justify-content-between text-light px-2 me-2">
                         <div>
                             <!-- h3? title -->
                             <h3>
@@ -47,20 +47,20 @@
 
                             </p>
                         </div>
-                        <div v-if="event.capacity - tickets.length && event.isCancelled == false > 0" class="row justify-content-center">
+                        <div v-if="event.capacity - tickets.length && event.isCancelled == false > 0" class="row justify-content-center my-4">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
                            <button v-if="!ticketholder && user.isAuthenticated" :disabled="ticketholderToggle" class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button>
                            <button v-else-if="user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">RETURN TICKETS</button>
                            <!-- <button v-else-if="event.isCancelled==true" disabled class="btn btn-danger col-6">EVENT CANCELLED</button> -->
                            <button v-else disabled class="btn btn-outline-light col-6">Log in to buy or return tickets</button>
                         </div>
-                        <div v-if="event.capacity - tickets.length == 0 && event.isCancelled == false" class="row justify-content-center">
+                        <div v-if="event.capacity - tickets.length == 0 && event.isCancelled == false" class="row justify-content-center my-4">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
                            <button v-if="ticketholder && user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">RETURN TICKETS</button>
                            <button v-else-if="!ticketholder" disabled class="btn btn-danger col-6">FULL</button>
                            <button v-else disabled class="btn btn-danger col-6">Full event</button>
                         </div>
-                        <div v-if="event.isCancelled == true" class="row justify-content-center">
+                        <div v-if="event.isCancelled == true" class="row justify-content-center my-4">
                            <!-- <button class="btn btn-outline-light col-6" @click="purchaseTicket">GET TICKETS</button> -->
                            <button v-if="ticketholder && user.isAuthenticated" class="btn btn-outline-light col-6" @click="returnTicket">TICKET REFUND</button>
                            <button v-else-if="!ticketholder" disabled class="btn btn-danger col-6">Event Cancelled</button>
@@ -90,7 +90,7 @@
             <!-- TODO bring in ticket holder images and :alt ticket holder name -->
         
 
-                <img v-for="ticket in tickets" :key="ticket.id" :src="ticket.profile.picture" :alt="ticket.profile.name" class="attend-img">
+                <img v-for="ticket in tickets" :key="ticket.id" :src="ticket.profile.picture" :alt="ticket.profile.name" :title="ticket.profile.name"  class="attend-img">
           
         </section>
 
@@ -109,7 +109,7 @@
                 <textarea v-model="eventComment.body" class="col-12" cols="30" rows="3" maxlength="250">
 
                 </textarea>
-                <button class="btn btn-outline-light text-light">SUBMIT</button>
+                <button class="btn btn-outline-light text-light my-2">SUBMIT</button>
                 </form>
             <!-- TODO bring in a comments component OR just put them here in a card - make sure the user image and name is present on the card a long with the commment body-->
             </section>
@@ -123,7 +123,7 @@
 <div class="col-8">
     {{ tComm.body }}
     <p class="row justify-content-end">
-        <button v-if="tComm.creator.id == account.id" @click="deleteComment" class="cancel-card btn col-4 text-light">DELETE</button>
+        <button v-if="tComm.creator.id == account.id" @click="deleteComment(tComm.id)" class="cancel-card btn col-4 text-light">DELETE</button>
     </p>
 </div>
         </section>
@@ -231,12 +231,13 @@ const ticketholderToggle = ref(false)
         },
 
            // TODO finish this function yay!
-           async deleteComment(){
+           async deleteComment(commentId){
             try {
-                const deleteComment = AppState.activeEventComments.find(comment => comment.creatorId == AppState.account.id)
-                const deletedCommentId = deleteComment.id
+                logger.log('deleting', commentId)
+                // const deleteComment = AppState.activeEventComments.find(comment => comment.creatorId == AppState.account.id)
+                // const deletedCommentId = deleteComment.id
         
-                await eventsService.deleteComment(deletedCommentId)
+                await eventsService.deleteComment(commentId)
             
             } catch (error) {
                 Pop.error(error)
@@ -288,6 +289,7 @@ const ticketholderToggle = ref(false)
    border-bottom-right-radius: 15px;
   
   width: 100%;
+  aspect-ratio: 1/1.25;
   object-fit: cover;
   object-position: center;
 // elevation-2 settings

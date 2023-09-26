@@ -42,6 +42,7 @@ export default {
   object-position: contain;
   object-fit: cover;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 
 footer {
