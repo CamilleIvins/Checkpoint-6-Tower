@@ -1,12 +1,13 @@
-
 {
   "folders": [
     {
-      "path": "Checkpoint-6-Tower.client",
+      "path": "client",
+      // "path": "Checkpoint-6-Tower.client",
       "name": "client"
     },
     {
-      "path": "Checkpoint-6-Tower",
+      "path": "server",
+      // "path": "Checkpoint-6-Tower",
       "name": "server"
     }
   ],
