@@ -29,7 +29,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the server application source code to the server container
-COPY  ./
+COPY server ./
 
 # Copy the built client files from the client builder container to the server's www directory
 COPY --from=client-builder /app/client/docs /app/server/www
