@@ -29,7 +29,7 @@ services:
   app:
     image: your_dockerhub_username/your-repo-name:latest
     ports:
-      - "7045:80"  # EC2_PORT:CONTAINER_PORT
+      - "3000:80"  # EC2_PORT:CONTAINER_PORT
     environment:
       - CONNECTION_STRING=
       - AUTH_DOMAIN=
