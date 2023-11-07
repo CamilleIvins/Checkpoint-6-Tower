@@ -23,7 +23,7 @@ FROM node:20
 WORKDIR /app/server
 
 # Copy the server-side package.json and package-lock.json to the server container
-COPY package*.json ./
+COPY server/package*.json ./
 
 # Install server application dependencies
 RUN npm install
