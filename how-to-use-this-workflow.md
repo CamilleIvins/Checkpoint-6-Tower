@@ -27,14 +27,14 @@ _docker-compose.yml_
 version: '3'
 services:
   app:
-    image: your_dockerhub_username/your-repo-name:latest
+    image: camilleivins/outofharbor:latest
     ports:
-      - "7045:80"  # EC2_PORT:CONTAINER_PORT
+      - "3000:80"  # EC2_PORT:CONTAINER_PORT
     environment:
-      - CONNECTION_STRING=
-      - AUTH_DOMAIN=
-      - AUTH_AUDIENCE=
-      - AUTH_CLIENT_ID=
+      - CONNECTION_STRING=mongodb+srv://student:lH4VTMYtunNzWu8o@bcwdatabase.25sxqum.mongodb.net/Tower?retryWrites=true&w=majority
+      - AUTH_DOMAIN=dev-empex7cj2h0al138.us.auth0.com
+      - AUTH_AUDIENCE=https://sandcastle.com
+      - AUTH_CLIENT_ID=kyRI3q7Ma6zMxpGCiHHj5zh8In3fcHDN
       - NODE_ENV=
 ```
 
