@@ -4,3 +4,5 @@ services:
     image: camilleivins/outofharbor:latest
     ports:
       - "3000:3000"
+    env_file:
+      - outofharbor-env
