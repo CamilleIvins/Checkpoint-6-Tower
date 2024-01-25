@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: 'tower-project',
+  base: '',
   build: {
     outDir: 'docs',
     sourcemap: false
