@@ -10,76 +10,77 @@
       </h1>
     </div>
   </div> -->
-  <!-- Trying out a MODAL -->
-<!-- <EventForm v-if="account"/> -->
-  <section class="row">
-    <!-- Yo, new row! -->
-    <div class="rounded my-2">
+    <!-- Trying out a MODAL -->
+    <!-- <EventForm v-if="account"/> -->
+    <section class="row">
+      <!-- Yo, new row! -->
+      <div class="rounded my-2">
 
-      <img src="https://images.unsplash.com/photo-1582091652153-eb8f55ff7cd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80" class="rounded cover-img elevation-2">
-    </div>
-  </section>
+        <img
+          src="https://images.unsplash.com/photo-1582091652153-eb8f55ff7cd9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1964&q=80"
+          class="rounded cover-img elevation-2">
+      </div>
+    </section>
 
-  <nav class="row justify-content-around my-3">
-        <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = ''">All</button>
-<span style="display: inline-block; width:0px; height:100%; background:rgb(205, 205, 205); margin:0 2px"></span>        
-        <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'concert'">Concerts</button>
-        <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'convention'">Conventions</button>
-        <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy= 'sport'">Sports</button>
-        <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'digital'">Digital</button>
-        <!-- <button class="btn col-2 btn-outline-light" @click="filterBy = 'misc'">Misc</button> -->
-  </nav>
-  
-  <section class="row">
-    <div v-for="event in events" :key="event.id" class="col-6 col-md-3">
-      <!-- {{ event.name }} -->
-      <EventCard :event="event" />
-    </div>
+    <nav class="row justify-content-around my-3">
+      <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = ''">All</button>
+      <span style="display: inline-block; width:0px; height:100%; background:rgb(205, 205, 205); margin:0 2px"></span>
+      <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'concert'">Concerts</button>
+      <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'convention'">Conventions</button>
+      <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'sport'">Sports</button>
+      <button class="frosted-card btn col-2 btn-outline-light" @click="filterBy = 'digital'">Digital</button>
+      <!-- <button class="btn col-2 btn-outline-light" @click="filterBy = 'misc'">Misc</button> -->
+    </nav>
+
+    <section class="row">
+      <div v-for="event in events" :key="event.id" class="col-6 col-md-3">
+        <!-- {{ event.name }} -->
+        <EventCards :event="event" />
+      </div>
+    </section>
   </section>
-</section>
 </template>
 
 <script>
 import { computed, onMounted, ref } from 'vue';
-// import { EventCard } from '../components/EventCard.vue';
 import { eventsService } from '../services/EventsService.js';
 import Pop from '../utils/Pop.js';
-import {AppState} from '../AppState.js'
-import EventCard from '../components/EventCard.vue';
+import { AppState } from '../AppState.js'
+import EventCards from '../components/EventCards.vue';
 import { logger } from '../utils/Logger.js';
 
 
 
 export default {
-    setup() {
-      onMounted(()=> {
-        getEvents();
-      });
-const filterBy = ref('')
-async function getEvents(){
-  // REMEMBER THE TRY-CATCH
-  try {
-    await eventsService.getEvents()
-    logger.log('did events come back?')
-  } catch (error) {
-    Pop.error(error)
-  }
-}
+  setup() {
+    onMounted(() => {
+      getEvents();
+    });
+    const filterBy = ref('')
+    async function getEvents() {
+      // REMEMBER THE TRY-CATCH
+      try {
+        await eventsService.getEvents()
+        logger.log('did events come back?')
+      } catch (error) {
+        Pop.error(error)
+      }
+    }
 
-        return {
-          filterBy,
-events: computed(()=> {
-  if(!filterBy.value)
-    return AppState.towerEvents
-  else {
-    return AppState.towerEvents.filter(tower => tower.type == filterBy.value)
-}
-   }),
-   account: computed(() => AppState.account.id),
+    return {
+      filterBy,
+      events: computed(() => {
+        if (!filterBy.value)
+          return AppState.towerEvents
+        else {
+          return AppState.towerEvents.filter(tower => tower.type == filterBy.value)
+        }
+      }),
+      account: computed(() => AppState.account.id),
 
     };
-},
-  components: {EventCard }
+  },
+  components: { EventCards }
 }
 </script>
 
@@ -103,27 +104,29 @@ events: computed(()=> {
     }
   }
 }
-.cover-img{
+
+.cover-img {
   height: 18vh;
   width: 100%;
   object-fit: cover;
   object-position: center;
-// elevation-2 settings
-  box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2), 
-  0 5px 6px 0 rgba(205, 205, 205, 0.14), 
-  0 1px 8px 0 rgba(205, 205, 205, 0.12);
+  // elevation-2 settings
+  box-shadow: 0 3px 3px -1px rgba(205, 205, 205, 0.2),
+    0 5px 6px 0 rgba(205, 205, 205, 0.14),
+    0 1px 8px 0 rgba(205, 205, 205, 0.12);
 }
 
-.frosted-card{
+.frosted-card {
   backdrop-filter: blur(3px);
-    background-color: rgba(145, 147, 150, 0.455);
-    overflow-wrap: break-word;
+  background-color: rgba(145, 147, 150, 0.455);
+  overflow-wrap: break-word;
 }
-.frosted-card:hover{
+
+.frosted-card:hover {
   backdrop-filter: blur(3px);
-    background-color: rgba(218, 218, 218, 0.925);
-    border: 0;
-    box-shadow: 0 0 10px 2px rgb(218, 218, 218);
-    transition: .35s ease;
+  background-color: rgba(218, 218, 218, 0.925);
+  border: 0;
+  box-shadow: 0 0 10px 2px rgb(218, 218, 218);
+  transition: .35s ease;
 }
 </style>
