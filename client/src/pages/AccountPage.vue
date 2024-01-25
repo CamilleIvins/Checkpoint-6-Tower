@@ -50,11 +50,11 @@
 import { computed, onMounted, } from 'vue';
 import { AppState } from '../AppState';
 import EventCards from '../components/EventCards.vue';
-import { eventsService } from '../services/EventsService.js';
 import { accountService } from '../services/AccountService.js';
-import { logger } from '../utils/Logger.js';
 import Pop from '../utils/Pop.js';
 import { useRoute } from 'vue-router';
+// import { eventsService } from '../services/EventsService.js';
+// import { logger } from '../utils/Logger.js';
 
 
 

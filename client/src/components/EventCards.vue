@@ -36,18 +36,12 @@
 </template>
 
 
-<script>
+<script setup>
+const props = defineProps({ event: Object })
 // import { AppState } from '../AppState';
 // import { computed, reactive, onMounted } from 'vue';
-import { Event } from '../models/Event.js';
+// import { Event } from '../models/Event.js';
 
-export default {
-    props: { event: { type: Event, required: true } },
-
-    setup() {
-        return {}
-    }
-};
 </script>
 
 
