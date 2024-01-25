@@ -1,9 +1,9 @@
 version: '3'
 services:
   app:
-    image: camilleivins/tower:latest
+    image: camilleivins/outofharbor:latest
     ports:
       - "3000:3000"
     env_file:
-      - tower-env
+      - outofharbor-env
     restart: unless-stopped
