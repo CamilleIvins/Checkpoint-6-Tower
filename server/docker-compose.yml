@@ -1,11 +1,9 @@
 version: '3'
 services:
   app:
-    image: camilleivins/checkpoint-6-tower:latest
+    image: camilleivins/outofharbor:latest
     ports:
       - "3000:3000"
     env_file:
-      - checkpoint-6-tower-env
+      - outofharbor-env
     restart: unless-stopped
-
-    # previous set-up title outofharbor
